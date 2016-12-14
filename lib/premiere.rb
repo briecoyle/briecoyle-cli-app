@@ -5,6 +5,11 @@ class Premiere
   attr_accessor :date, :shows
   @@all = []
 
+  def initialize(date)
+    @date = date
+    @@all << self
+  end
+
   def all
     @@all
   end
