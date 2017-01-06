@@ -25,7 +25,12 @@ class Scraper
   def scrape_for_premieres
     premieres = []
     premiere_page = self.load_page
-    premieres << premiere_page.css(".sublistbig").text.split("\r\n              \r\n                ")
+    premieres << premiere_page.css(".sublistbig").text.split("\r\n")
+    clean_premieres = premieres.flatten!.grep(/([A-Z]{3})/)
+    premieres_hash = {}
+    clean_premieres.map! do |string|
+      test = string.strip.split(/\s*\/\s*|\s{1}/)
+    end
     binding.pry
   end
 
