@@ -10,6 +10,9 @@ class Scraper
 
   def scrape_for_titles
     shows = []
+    premiere_page = self.load_page
+    titles = []
+    premieres = premiere_page.css(".even")
 #    self.load_page.css("table tr .even").each do |premiere_listing|
 #        shows << {
 #          :title => premiere_listing.css("td .title").text,
@@ -20,24 +23,20 @@ class Scraper
 #        }
 #        binding.pry
 #    end
+    binding.pry
   end
 
   def scrape_for_premieres
     premieres = []
     premiere_page = self.load_page
     premieres << premiere_page.css(".sublistbig").text.split("\r\n")
-    clean_premieres = premieres.flatten!.grep(/([A-Z]{3})/)
-    premieres_hash = {}
-    clean_premieres.map! do |string|
-      test = string.strip.split(/\s*\/\s*|\s{1}/)
-    end
-    binding.pry
+    clean_premieres = premieres.flatten!.grep(/([A-Z]{3}\s*\/\s*\w*\s*\d*)/)
   end
 
-  def self.scrape_for_shows
+  def scrape_for_shows
     shows = []
 
   end
 end
 
-Scraper.new.scrape_for_premieres
+Scraper.new.scrape_for_titles
