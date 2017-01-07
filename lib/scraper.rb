@@ -11,14 +11,16 @@ class Scraper
   def scrape_for_titles
     shows = []
     premiere_page = self.load_page
-    titles = []
     premieres = premiere_page.css(".even")
-#    self.load_page.css("table tr .even").each do |premiere_listing|
-#        shows << {
-
-#        }
-#        binding.pry
-#    end
+    premieres.each do |listing|
+      shows << {
+        :title => listing.css(".title").text.strip,
+        :genre => listing.css(".title + td").text,
+        :time_for_broadcast => listing.css("td:last-of-type").text.strip,
+        #some times will include the network if not an image
+        #:network => listing.css("img").attribute("alt").value
+      }
+    end
     binding.pry
   end
 
@@ -39,4 +41,4 @@ Scraper.new.scrape_for_titles
 #titles = premieres.css(".title").text
 #genres = premieres.css(".title + td").text
 #time_for_broadcast = premieres.css(".even td:last-of-type").text
-#time_for_streaming or network_if_image = premieres.css(".even td:last-of-type > img").attribute("alt").valur
+#time_for_streaming or network_if_image = premieres.css(".even td:last-of-type > img").attribute("alt").value
