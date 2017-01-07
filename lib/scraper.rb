@@ -13,12 +13,23 @@ class Scraper
     premiere_page = self.load_page
     premieres = premiere_page.css(".even")
     premieres.each do |listing|
+      this_title = listing.css(".title").text.strip
+      this_genre = listing.css(".title + td").text
+      this_time = listing.css("td:last-of-type").text.strip
+
+      if !this_time.match(/^\d/)
+        modified_time = this_time.split(", ")
+        this_time = modified_time[1]
+        this_network = modified_time[0]
+      else
+      end
+      
       shows << {
-        :title => listing.css(".title").text.strip,
-        :genre => listing.css(".title + td").text,
-        :time_for_broadcast => listing.css("td:last-of-type").text.strip,
+        :title => this_title,
+        :genre => this_genre,
+        :time => this_time,
         #some times will include the network if not an image
-        #:network => listing.css("img").attribute("alt").value
+        :network => this_network
       }
     end
     binding.pry
