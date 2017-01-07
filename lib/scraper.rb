@@ -8,6 +8,25 @@ class Scraper
     Nokogiri::HTML(html)
   end
 
+  def scrape_for_premieres
+    premiere_page = self.load_page
+    premiere_page.css(".sublistbig")
+
+  end
+
+  def scrape_and_clean_premieres
+    premieres = []
+    premieres << self.scrape_for_premieres.text.split("\r\n")
+    clean_premieres = premieres.flatten!.grep(/([A-Z]{3}\s*\/\s*\w*\s*\d*)/)
+  end
+
+  def scrape_for_shows
+    shows = []
+    premiere_page.css(".sublistbig").each do |premiere|
+      shows << premiere.css("td")
+    end
+  end
+  
   def scrape_for_titles
     shows = []
     premiere_page = self.load_page
@@ -36,21 +55,9 @@ class Scraper
     binding.pry
   end
 
-  def scrape_for_premieres
-    premieres = []
-    premiere_page = self.load_page
-    premieres << premiere_page.css(".sublistbig").text.split("\r\n")
-    clean_premieres = premieres.flatten!.grep(/([A-Z]{3}\s*\/\s*\w*\s*\d*)/)
-  end
 
-  def scrape_for_shows
-    shows = []
 
-  end
+
 end
 
-Scraper.new.scrape_for_titles
-#titles = premieres.css(".title").text
-#genres = premieres.css(".title + td").text
-#time_for_broadcast = premieres.css(".even td:last-of-type").text
-#time_for_streaming or network_if_image = premieres.css(".even td:last-of-type > img").attribute("alt").value
+Scraper.new.scrape_and_clean_premieres
