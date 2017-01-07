@@ -1,0 +1,31 @@
+
+[1mFrom:[0m /home/briecoyle/code/labs/tivo-premieres-cli-app/lib/scraper.rb @ line 36 Scraper#scrape_for_titles:
+
+    [1;34m11[0m: [32mdef[0m [1;34mscrape_for_titles[0m
+    [1;34m12[0m:   shows = []
+    [1;34m13[0m:   premiere_page = [1;36mself[0m.load_page
+    [1;34m14[0m:   premieres = premiere_page.css([31m[1;31m"[0m[31m.even[1;31m"[0m[31m[0m)
+    [1;34m15[0m:   premieres.each [32mdo[0m |listing|
+    [1;34m16[0m:     this_title = listing.css([31m[1;31m"[0m[31m.title[1;31m"[0m[31m[0m).text.strip
+    [1;34m17[0m:     this_genre = listing.css([31m[1;31m"[0m[31m.title + td[1;31m"[0m[31m[0m).text
+    [1;34m18[0m:     this_time = listing.css([31m[1;31m"[0m[31mtd:last-of-type[1;31m"[0m[31m[0m).text.strip
+    [1;34m19[0m: 
+    [1;34m20[0m:     [32mif[0m !this_time.match([35m[1;35m/[0m[35m^[1;35m\d[0m[35m[1;35m/[0m[35m[0m)
+    [1;34m21[0m:       modified_time = this_time.split([31m[1;31m"[0m[31m, [1;31m"[0m[31m[0m)
+    [1;34m22[0m:       this_time = modified_time[[1;34m1[0m]
+    [1;34m23[0m:       this_network = modified_time[[1;34m0[0m]
+    [1;34m24[0m:     [32melse[0m
+    [1;34m25[0m:       this_network = listing.css([31m[1;31m"[0m[31mimg[1;31m"[0m[31m[0m).attribute([31m[1;31m"[0m[31malt[1;31m"[0m[31m[0m).value
+    [1;34m26[0m:     [32mend[0m
+    [1;34m27[0m: 
+    [1;34m28[0m:     shows << {
+    [1;34m29[0m:       [33m:title[0m => this_title,
+    [1;34m30[0m:       [33m:genre[0m => this_genre,
+    [1;34m31[0m:       [33m:time[0m => this_time,
+    [1;34m32[0m:       [1;34m#some times will include the network if not an image[0m
+    [1;34m33[0m:       [33m:network[0m => this_network
+    [1;34m34[0m:     }
+    [1;34m35[0m:   [32mend[0m
+ => [1;34m36[0m:   binding.pry
+    [1;34m37[0m: [32mend[0m
+
