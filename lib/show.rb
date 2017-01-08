@@ -36,18 +36,6 @@ class Show
     end
   end
 
-  # def self.create_from_scraper(scraper_array)
-  #   scraper_array.each do |show_hash|
-  #     new_show = Show.new
-  #     new_show.title = show_hash[:title]
-  #     new_show.genre = show_hash[:genre]
-  #     new_show.time = show_hash[:time]
-  #     new_show.network = show_hash[:network]
-  #     #new_show.premiere =
-  #   end
-  #   binding.pry
-  # end
-
   def add_premiere(new_premiere)
     self.premiere = new_premiere
     new_premiere.shows << self
