@@ -11,13 +11,16 @@ class Scraper
   def scrape_for_premieres
     premiere_page = self.load_page
     premiere_page.css(".sublistbig")
-
   end
 
-  def scrape_and_clean_premieres
+  def make_premieres
     premieres = []
     premieres << self.scrape_for_premieres.text.split("\r\n")
     clean_premieres = premieres.flatten!.grep(/([A-Z]{3}\s*\/\s*\w*\s*\d*)/)
+    clean_premieres.each do |info|
+      Premiere.create_from_scraper(info)
+      shows =
+    end
   end
 
   def scrape_for_shows
@@ -26,7 +29,12 @@ class Scraper
       shows << premiere.css("td")
     end
   end
-  
+
+  def make_shows(shows_from_scraper)
+
+
+  end
+
   def scrape_for_titles
     shows = []
     premiere_page = self.load_page
@@ -54,9 +62,6 @@ class Scraper
     end
     binding.pry
   end
-
-
-
 
 end
 
