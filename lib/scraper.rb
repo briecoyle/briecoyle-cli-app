@@ -11,7 +11,6 @@ class Scraper
   def scrape_for_premieres
     premiere_page = self.load_page
     info = premiere_page.css(".sublistbig")
-    binding.pry
   end
 
   def make_premieres
@@ -19,6 +18,7 @@ class Scraper
     premieres.each do |premiere_info|
       new_premiere = Premiere.create_from_scraper(premiere_info)
       shows = premiere_info.scrape_for_shows
+      binding.pry
       shows.each do |show_info|
         new_show = Show.create_from_scraper(show_info)
         new_premiere.add_show(new_show)
@@ -34,7 +34,7 @@ class Scraper
     shows
   end
 
-  def make_shows
+  def get_show_info
     scrape_for_shows.each do |show_info|
       show_info.each do |listing|
         this_title = listing.css(".title").text.strip
@@ -59,6 +59,10 @@ class Scraper
       binding.pry
     end
   end
+
+  def make_show
+    new_show = Show.create_from_scraper(self.get_show_info)
+  end
 end
 
-Scraper.new.scrape_for_premieres
+Scraper.new.make_premieres

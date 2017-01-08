@@ -26,8 +26,8 @@ class Show
   end
 
   def add_premiere(new_premiere)
-    self.all << new_premiere
-    new_premiere.date << self
+    self.premiere = new_premiere
+    new_premiere.shows << self
   end
 end
 
