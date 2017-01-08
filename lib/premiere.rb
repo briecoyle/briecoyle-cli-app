@@ -31,5 +31,3 @@ class Premiere
     new_show.premiere << self
   end
 end
-
-Premiere.create_from_scraper(test_array)

@@ -30,13 +30,3 @@ class Show
     new_premiere.shows << self
   end
 end
-
-test_shows_array = [{:title=>"Coin Heist  Trailer", :genre=>"Thriller", :time=>nil, :network=>"Netflix"},
- {:title=>"Rosewood", :genre=>"Drama", :time=>"8p", :network=>"Fox"},
- {:title=>"Sleepy Hollow", :genre=>"Drama", :time=>"9p", :network=>"Fox"},
- {:title=>"Tarzan and Jane",
-  :genre=>"Animation/Family",
-  :time=>nil,
-  :network=>"Netflix"}]
-
-Show.create_from_scraper(test_shows_array)

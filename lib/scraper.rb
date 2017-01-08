@@ -10,16 +10,16 @@ class Scraper
 
   def scrape_for_premieres
     premiere_page = self.load_page
-    info = premiere_page.css(".sublistbig")
+    premiere_page.css(".sublistbig")
   end
 
   def make_premieres
     premieres = self.scrape_for_premieres
     premieres.each do |premiere_info|
       new_premiere = Premiere.create_from_scraper(premiere_info)
-      shows = premiere_info.scrape_for_shows
+      shows = premiere_info.get_show_info
       binding.pry
-      shows.each do |show_info|
+      shows.each do |shows_info|
         new_show = Show.create_from_scraper(show_info)
         new_premiere.add_show(new_show)
       end
@@ -56,12 +56,11 @@ class Scraper
           :network => this_network || "Netflix"
         }
       end
-      binding.pry
     end
   end
 
-  def make_show
-    new_show = Show.create_from_scraper(self.get_show_info)
+  def make_shows
+    Show.create_from_scraper(self.get_show_info)
   end
 end
 
