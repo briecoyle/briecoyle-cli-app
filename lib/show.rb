@@ -39,4 +39,16 @@ class Show
     self.premiere = new_premiere
     new_premiere.shows << self
   end
+
+  def find_by_title(this_title)
+    Show.all.detect{|show| show.title == this_title}
+  end
+
+  def find_by_genre(this_genre)
+    Show.all.find_all {|show| show.genre == this_genre}
+  end
+
+  def find_by_network(this_network)
+    Show.all.find_all {|show| show.network == this_network}
+  end
 end
