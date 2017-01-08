@@ -13,14 +13,24 @@ class CommandLineInterface
   def start
     puts ""
     puts "Here are the upcoming television premieres!"
-    print_premieres
+    Premiere.all.each do |premiere|
+      print_premiere(premiere)
+    end
     puts ""
     puts "Is there a show about which you would like more detailed information? Please enter the show title."
     input = gets.strip
     print_show_details(Show.find_by_title(input))
+    puts ""
+    puts "Would you like information on another show? Enter Y or N."
+    if input == "Y"
+      start
+    else
+      puts ""
+      puts "Goodbye."
+    end
   end
 
-  def print_premieres(premiere)
+  def print_premiere(premiere)
     puts ""
     puts "----- #{premiere.day}, #{premiere.month} #{premiere.date} -----"
     puts "#{premieres.shows}"
