@@ -5,7 +5,7 @@ require 'pry'
 
 class CommandLineInterface
   def call
-    Scraper.new.scrape_page
+    Premiere.create_from_scraper(Scraper.new.scrape_page)
     puts "Welcome to your Tivo Television Premieres Guide!"
     start
   end
@@ -13,9 +13,8 @@ class CommandLineInterface
   def start
     puts ""
     puts "Here are the upcoming television premieres!"
-    Premiere.all.each do |premiere|
-      print_premiere(premiere)
-    end
+    print_premieres
+    binding.pry
     puts ""
     puts "Is there a show about which you would like more detailed information? Please enter the show title."
     input = gets.strip
@@ -30,16 +29,19 @@ class CommandLineInterface
     end
   end
 
-  def print_premiere(premiere)
-    puts ""
-    puts "----- #{premiere.day}, #{premiere.month} #{premiere.date} -----"
-    puts "#{premieres.shows}"
-    puts ""
+  def print_premieres
+    Premiere.all.each do |premiere|
+      puts ""
+      puts "#{premiere.day}, #{premiere.month} #{premiere.date}:"
+      premiere.shows.each do |s|
+        print "s.title"
+      end
+    end
   end
 
   def print_show_details(show)
     puts ""
-    puts "----- #{show.name} -----"
+    puts "----- #{show.title} -----"
     puts "Genre: #{show.genre}"
     puts "Network: #{show.network}"
     puts "Time: #{show.time}"

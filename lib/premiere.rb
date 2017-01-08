@@ -19,14 +19,16 @@ class Premiere
         new_premiere.month = premiere_array[1]
         new_premiere.date = premiere_array[2]
       end
-      premiere.css(".even").each do |shows_info|
+      premiere.css(".even").each do |show_info|
         new_show = Show.create_from_scraper(show_info)
         new_premiere.add_show(new_show)
+        binding.pry
       end
+      binding.pry
     end
   end
 
-  def all
+  def self.all
     @@all
   end
 
@@ -35,3 +37,6 @@ class Premiere
     new_show.premiere << self
   end
 end
+
+Premiere.create_from_scraper(Scraper.new.scrape_page)
+binding.pry
