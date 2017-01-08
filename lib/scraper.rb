@@ -19,7 +19,7 @@ class Scraper
     clean_premieres = premieres.flatten!.grep(/([A-Z]{3}\s*\/\s*\w*\s*\d*)/)
     clean_premieres.each do |info|
       Premiere.create_from_scraper(info)
-      shows =
+      #shows =
     end
   end
 
@@ -30,7 +30,8 @@ class Scraper
     end
   end
 
-  def make_shows(shows_from_scraper)
+  def make_shows
+    Show.create_from_scraper
 
 
   end
@@ -65,4 +66,4 @@ class Scraper
 
 end
 
-Scraper.new.scrape_and_clean_premieres
+Scraper.new.scrape_for_titles
