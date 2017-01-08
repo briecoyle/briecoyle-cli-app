@@ -20,6 +20,7 @@ class Show
       new_show.genre = show_hash[:genre]
       new_show.time = show_hash[:time]
       new_show.network = show_hash[:network]
+      #new_show.premiere =
     end
     binding.pry
   end

@@ -57,7 +57,6 @@ class Scraper
         :title => this_title,
         :genre => this_genre,
         :time => this_time,
-        #some times will include the network if not an image
         :network => this_network || "Netflix"
       }
     end
