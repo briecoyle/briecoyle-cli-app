@@ -11,18 +11,17 @@ class Premiere
   end
 
   def self.create_from_scraper(scraper_data)
-    scraper_data.css(".sublistbig").each do |premiere|
-      premiere_array = premiere.text.split("\r\n").grep(/([A-Z]{3}\s*\/\s*\w*\s*\d*)/)[0].strip.split(/\s*\/\s*|\s/)
+    scraper_data.css(".sublistbig, .sublistbig~.even").each do |premiere|
       new_premiere = Premiere.new
-      new_premiere.day = premiere_array[0].capitalize
-      new_premiere.month = premiere_array[1]
-      new_premiere.date = premiere_array[2]
-      shows = scraper_data.css(".sublistbig ~ .even")
-      binding.pry
-      shows.each do |show_info|
+      premiere.css(".sublistbig").each do |premiere_info|
+        premiere_array = premiere.text.split("\r\n").grep(/([A-Z]{3}\s*\/\s*\w*\s*\d*)/)[0].strip.split(/\s*\/\s*|\s/)
+        new_premiere.day = premiere_array[0].capitalize
+        new_premiere.month = premiere_array[1]
+        new_premiere.date = premiere_array[2]
+      end
+      premiere.css(".even").each do |shows_info|
         new_show = Show.create_from_scraper(show_info)
-        add_show(new_show)
-        binding.pry
+        new_premiere.add_show(new_show)
       end
     end
   end
@@ -36,5 +35,3 @@ class Premiere
     new_show.premiere << self
   end
 end
-
-Premiere.create_from_scraper(Scraper.new.scrape_page)

@@ -32,7 +32,6 @@ class Show
       new_show.genre = this_genre
       new_show.time = this_time
       new_show.network = this_network || "Netflix"
-      binding.pry
     end
   end
 
@@ -41,5 +40,3 @@ class Show
     new_premiere.shows << self
   end
 end
-
-Show.create_from_scraper(Scraper.new.scrape_page.css(".sublistbig ~ .even"))

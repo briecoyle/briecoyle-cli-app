@@ -12,7 +12,4 @@ class Scraper
     premiere_page = self.load_page
     try = premiere_page.css("table")
   end
-
  end
-
-Scraper.new.scrape_page
